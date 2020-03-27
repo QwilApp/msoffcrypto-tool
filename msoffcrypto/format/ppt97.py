@@ -231,7 +231,10 @@ def _parseUserEditAtom(blob):
     # encryptSessionPersistIdRef (4 bytes): An optional PersistIdRef
     # that specifies the value to look up in the persist object directory
     # to find the offset of the CryptSession10Container record (section 2.3.7).
-    encryptSessionPersistIdRef, = unpack("<I", blob.read(4))
+    blob_value = blob.read(4)
+    encryptSessionPersistIdRef = None
+    if blob_value:
+        encryptSessionPersistIdRef, = unpack("<I", blob_value)
 
     return UserEditAtom(
         rh=rh,
